@@ -1,1 +1,32 @@
+name: Jira Label Reminder
 
+on:
+  schedule:
+    # Her hafta içi sabah 09:00 Türkiye saati (UTC+3 → UTC 06:00)
+    - cron: "0 6 * * 1-5"
+
+  # Elle de çalıştırabilmek için (test için kullanışlı)
+  workflow_dispatch:
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Kodu çek
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Bağımlılıkları yükle
+        run: pip install requests
+
+      - name: 🚀 Reminder scriptini çalıştır
+        env:
+          JIRA_EMAIL:      ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN:  ${{ secrets.JIRA_API_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: python label_reminder.py
