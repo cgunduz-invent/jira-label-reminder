@@ -20,18 +20,7 @@ EMAIL_TO_SLACK = {
 }
 
 # ── JQL sorgusu ───────────────────────────────────────────────────────────────
-JQL = """
-labels IS EMPTY
-AND project IN ("TCS","LP2CS","ATCS","APRLTRN","IPEKYOLMD","MMCS")
-AND issuetype IN (
-    "Service/Operational Work Log","Int Call","Reporting","Analysis",
-    "Client Call","Bug",Documentation,Development,Handover,Task,
-    Extension,"Fault (Off-Duty)","Version Upgrade","Product Test","R&D"
-)
-AND (created >= "-180d" OR updated >= "-180d")
-AND timespent > 0
-ORDER BY created ASC, status ASC, assignee ASC
-""".strip()
+JQL = 'labels IS EMPTY AND project IN ("TCS","LP2CS","ATCS","APRLTRN","IPEKYOLMD","MMCS") AND issuetype IN ("Service/Operational Work Log","Int Call","Reporting","Analysis","Client Call","Bug","Documentation","Development","Handover","Task","Extension","Fault (Off-Duty)","Version Upgrade","Product Test","R&D") AND (created >= "-180d" OR updated >= "-180d") AND timespent > 0 ORDER BY created ASC, status ASC, assignee ASC'
 
 # ── Jira'dan taskları çek ─────────────────────────────────────────────────────
 def fetch_issues():
