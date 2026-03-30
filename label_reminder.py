@@ -35,20 +35,24 @@ ORDER BY created ASC, status ASC, assignee ASC
 
 # ── Jira'dan taskları çek ─────────────────────────────────────────────────────
 def fetch_issues():
-    url = f"{JIRA_BASE_URL}/rest/api/3/search"
+    # Jira, GET /search endpoint'ini deprecated etti → POST /search/jql kullan
+    url = f"{JIRA_BASE_URL}/rest/api/3/search/jql"
     auth = (JIRA_EMAIL, JIRA_TOKEN)
-    headers = {"Accept": "application/json"}
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }
     issues = []
     start = 0
 
     while True:
-        params = {
+        payload = {
             "jql": JQL,
             "startAt": start,
             "maxResults": 100,
-            "fields": "summary,assignee,status,labels"
+            "fields": ["summary", "assignee", "status", "labels"]
         }
-        resp = requests.get(url, auth=auth, headers=headers, params=params)
+        resp = requests.post(url, auth=auth, headers=headers, json=payload)
         resp.raise_for_status()
         data = resp.json()
         batch = data.get("issues", [])
