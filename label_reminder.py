@@ -24,7 +24,7 @@ JQL = 'labels IS EMPTY AND project IN ("TCS","LP2CS","ATCS","APRLTRN","IPEKYOLMD
 
 # ── Jira'dan taskları çek ─────────────────────────────────────────────────────
 def fetch_issues():
-    # Jira, GET /search endpoint'ini deprecated etti → POST /search/jql kullan
+    # Yeni Jira API: POST /search/jql + nextPageToken ile pagination
     url = f"{JIRA_BASE_URL}/rest/api/3/search/jql"
     auth = (JIRA_EMAIL, JIRA_TOKEN)
     headers = {
@@ -32,23 +32,28 @@ def fetch_issues():
         "Content-Type": "application/json"
     }
     issues = []
-    start = 0
+    next_page_token = None
 
     while True:
         payload = {
             "jql": JQL,
-            "startAt": start,
             "maxResults": 100,
             "fields": ["summary", "assignee", "status", "labels"]
         }
+        if next_page_token:
+            payload["nextPageToken"] = next_page_token
+
         resp = requests.post(url, auth=auth, headers=headers, json=payload)
         resp.raise_for_status()
         data = resp.json()
         batch = data.get("issues", [])
         issues.extend(batch)
-        if start + len(batch) >= data["total"]:
+
+        if data.get("isLast", True):
             break
-        start += len(batch)
+        next_page_token = data.get("nextPageToken")
+        if not next_page_token:
+            break
 
     return issues
 
