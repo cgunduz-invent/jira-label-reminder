@@ -4,7 +4,7 @@ on:
   schedule:
     # Her hafta içi (Pazartesi-Cuma) saat 09:00 Türkiye saatiyle
     # UTC+3 olduğu için UTC'de 06:00 = TR'de 09:00
-    - cron: "0 6 * * 1-5"
+    - cron: "13 6 * * 1-5"
 
   # İstersen butona basarak da çalıştır (test için kullanışlı)
   workflow_dispatch:
