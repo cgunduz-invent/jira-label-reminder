@@ -17,6 +17,7 @@ EMAIL_TO_SLACK = {
     "ece.yurtsever@invent.ai"  : "U084A61BF52",
     "ecem.sert@invent.ai"      : "U087B6YQPNE",
     "ugur.kilinc@invent.ai"    : "U01EQ4NM0UV",
+    "ata.tosun@invent.ai"      : "D09EQ8JRCMP"
 }
 
 # ── JQL sorguları ─────────────────────────────────────────────────────────────
