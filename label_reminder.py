@@ -23,7 +23,7 @@ EMAIL_TO_SLACK = {
 # ── JQL sorguları ─────────────────────────────────────────────────────────────
 
 # Query 1: Label'sız tasklar
-JQL_NO_LABEL = 'labels IS EMPTY AND project IN ("TCS","LP2CS","ATCS","APRLTRN","IPEKYOLMD","MMCS") AND issuetype IN ("Service/Operational Work Log","Int Call","Reporting","Analysis","Client Call","Bug","Documentation","Development","Handover","Task","Extension","Fault (Off-Duty)","Version Upgrade","Product Test","R&D") AND (created >= "-180d" OR updated >= "-180d") ORDER BY created ASC, status ASC, assignee ASC'
+JQL_NO_LABEL = 'labels IS EMPTY AND project IN ("TCS","LP2CS","ATCS","APRLTRN","IPEKYOLMD","MMCS") AND issuetype IN ("Service/Operational Work Log","Int Call","Reporting","Analysis","Client Call","Bug","Documentation","Development","Handover","Task","Extension","Fault (Off-Duty)","Version Upgrade","Product Test","R&D") AND resolution != "Won\'t Fix" AND (created >= "-180d" OR updated >= "-180d") ORDER BY created ASC, status ASC, assignee ASC'
 
 # Query 2: Related Project alanı boş
 JQL_NO_RELATED_PROJECT = 'project in ("TCS","LP2CS","FLOMCS","FMCS","ATCS","APRLTRN","IPEKYOLMD","MMCS") AND (created >= "-180d" OR updated >= "-180d") AND "Related Project[Project Picker (single project)]" IS EMPTY ORDER BY created DESC'
