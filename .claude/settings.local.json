@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr create --title 'Remove Won'\\\\''t Fix resolution filter from label reminder query' --body ' *)"
+    ]
+  }
+}
